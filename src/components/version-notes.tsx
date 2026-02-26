@@ -1,6 +1,14 @@
-export const appVersion = '0.1.3';
+export const appVersion = '0.1.4';
 
 export const patchNotes = [
+  {
+    version: '0.1.4',
+    notes: [
+      'Updated Next.js and eslint-config-next to 15.2.4 to remediate the vulnerable framework version flagged during deployment checks.',
+      'Bumped the app release version to 0.1.4 so the dashboard and package metadata stay aligned with this security patch.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.1.3',
     notes: [
