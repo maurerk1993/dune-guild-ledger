@@ -1,6 +1,5 @@
 import './globals.css';
-import { Nav } from '@/components/nav';
-import { SignOutButton } from '@/components/sign-out-button';
+import { AppHeaderActions } from '@/components/app-header-actions';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,10 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <h1 className="text-2xl font-semibold text-dune-gold">Atreides Guild Ledger</h1>
               <p className="text-sm text-dune-azure">Noble records for Dune: Awakening guild logistics.</p>
             </div>
-            <div className="flex items-center gap-3">
-              <Nav />
-              <SignOutButton />
-            </div>
+            <AppHeaderActions />
           </header>
           {children}
         </main>
