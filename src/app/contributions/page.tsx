@@ -5,6 +5,12 @@ import { useEffect, useState } from 'react';
 
 type Action = { id: string; label: string; description: string | null; is_active: boolean };
 type Log = { id: string; created_at: string; contribution_actions: { label: string } | null; profiles: { email: string } | null };
+type RawLog = {
+  id: string;
+  created_at: string;
+  contribution_actions: { label: string }[] | null;
+  profiles: { email: string }[] | null;
+};
 
 export default function ContributionsPage() {
   const [actions, setActions] = useState<Action[]>([]);
@@ -15,11 +21,27 @@ export default function ContributionsPage() {
   async function load() {
     const supabase = createClient();
     const [{ data: a }, { data: l }] = await Promise.all([
-      supabase.from('contribution_actions').select('id,label,description,is_active').eq('is_active', true).order('sort_order'),
-      supabase.from('contribution_logs').select('id,created_at,contribution_actions(label),profiles(email)').order('created_at', { ascending: false }).limit(25)
+      supabase
+        .from('contribution_actions')
+        .select('id,label,description,is_active')
+        .eq('is_active', true)
+        .order('sort_order')
+        .returns<Action[]>(),
+      supabase
+        .from('contribution_logs')
+        .select('id,created_at,contribution_actions(label),profiles(email)')
+        .order('created_at', { ascending: false })
+        .limit(25)
+        .returns<RawLog[]>()
     ]);
-    setActions((a ?? []) as Action[]);
-    setLogs((l ?? []) as Log[]);
+    setActions(a ?? []);
+    const normalizedLogs: Log[] = (l ?? []).map((log) => ({
+      id: log.id,
+      created_at: log.created_at,
+      contribution_actions: log.contribution_actions?.[0] ?? null,
+      profiles: log.profiles?.[0] ?? null
+    }));
+    setLogs(normalizedLogs);
     const { data: userData } = await supabase.auth.getUser();
     if (userData.user) {
       const { data: profile } = await supabase.from('profiles').select('role').eq('id', userData.user.id).single();
