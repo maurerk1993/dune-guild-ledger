@@ -8,7 +8,7 @@ export function SignOutButton() {
 
   return (
     <button
-      className="bg-dune-azure text-slate-950"
+      style={{ background: 'var(--accent-soft)', color: '#101722' }}
       onClick={async () => {
         const supabase = createClient();
         await supabase.auth.signOut();

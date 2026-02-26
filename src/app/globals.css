@@ -3,22 +3,99 @@
 @tailwind utilities;
 
 :root {
+  --bg: #f3ecdb;
+  --bg-gradient-start: #fff7e5;
+  --bg-gradient-mid: #e2d3ad;
+  --bg-gradient-end: #c2a56f;
+  --panel: rgba(255, 249, 234, 0.9);
+  --panel-border: rgba(119, 92, 45, 0.35);
+  --text: #2f2414;
+  --muted: #5d4a2d;
+  --accent: #8a5b1a;
+  --accent-soft: #d3ad6a;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0d1218;
+  --bg-gradient-start: #1f2730;
+  --bg-gradient-mid: #151a1f;
+  --bg-gradient-end: #0a0d12;
+  --panel: rgba(21, 26, 31, 0.84);
+  --panel-border: rgba(116, 154, 191, 0.35);
+  --text: #e7d3ab;
+  --muted: #9eb8d1;
+  --accent: #e4b85d;
+  --accent-soft: #5c8db8;
   color-scheme: dark;
 }
 
 body {
-  @apply bg-dune-night text-dune-sand;
+  background: radial-gradient(circle at top, var(--bg-gradient-start), var(--bg-gradient-mid) 45%, var(--bg-gradient-end));
+  color: var(--text);
   font-family: Inter, system-ui, sans-serif;
+  min-height: 100vh;
 }
 
 .card {
-  @apply rounded-xl border border-dune-azure/30 bg-slate-950/40 p-4;
+  @apply rounded-xl border p-4 shadow-lg backdrop-blur-sm;
+  background: var(--panel);
+  border-color: var(--panel-border);
 }
 
-input, select, textarea {
-  @apply rounded-md border border-dune-azure/30 bg-slate-900 px-3 py-2 text-sm;
+input,
+select,
+textarea {
+  @apply rounded-md border px-3 py-2 text-sm;
+  background: color-mix(in srgb, var(--panel) 95%, transparent);
+  border-color: var(--panel-border);
+  color: var(--text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
 }
 
 button {
-  @apply rounded-md px-3 py-2 text-sm font-medium;
+  @apply rounded-md px-3 py-2 text-sm font-medium transition;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+.thematic-title {
+  color: var(--accent);
+}
+
+.thematic-subtitle {
+  color: var(--muted);
+}
+
+.nav-shell {
+  @apply flex flex-wrap gap-2 rounded-xl border p-2 shadow-md;
+  border-color: var(--panel-border);
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+}
+
+.nav-link {
+  @apply rounded-lg px-3 py-2 text-sm font-medium transition;
+  color: var(--muted);
+}
+
+.nav-link:hover {
+  background: color-mix(in srgb, var(--accent-soft) 25%, transparent);
+  color: var(--text);
+}
+
+.nav-link-active {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 65%, #fff));
+  color: #101722;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
 }
