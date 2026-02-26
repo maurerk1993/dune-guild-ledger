@@ -1,6 +1,14 @@
-export const appVersion = '0.1.2';
+export const appVersion = '0.1.3';
 
 export const patchNotes = [
+  {
+    version: '0.1.3',
+    notes: [
+      'Added Vercel project configuration so deployments use the Next.js build output instead of expecting a static public folder.',
+      'Resolved deployment failure caused by Output Directory mismatch in Vercel settings.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.1.2',
     notes: [
