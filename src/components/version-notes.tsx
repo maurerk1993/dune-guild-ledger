@@ -1,6 +1,14 @@
-export const appVersion = '0.3.1';
+export const appVersion = '0.3.2';
 
 export const patchNotes = [
+  {
+    version: '0.3.2',
+    notes: [
+      'Added a database hotfix migration to safely remove the overly permissive profile read policy introduced during the 0.3.0/0.3.1 migration path.',
+      'Made the policy fix idempotent so rerunning SQL no longer fails with "policy already exists" errors in partially migrated environments.',
+      'Database migration required: run supabase/migrations/0003_profiles_policy_hotfix.sql after pulling this release.'
+    ]
+  },
   {
     version: '0.3.1',
     notes: [
