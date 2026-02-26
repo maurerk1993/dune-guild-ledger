@@ -5,6 +5,11 @@ import { NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
+  type CookieToSet = {
+    name: string;
+    value: string;
+    options?: Parameters<typeof response.cookies.set>[2];
+  };
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
