@@ -154,7 +154,13 @@ alter table public.contribution_logs enable row level security;
 alter table public.app_settings enable row level security;
 
 create policy "profiles self read" on public.profiles for select using (auth.uid() = id or public.is_admin(auth.uid()));
-create policy "profiles self update" on public.profiles for update using (auth.uid() = id or public.is_admin(auth.uid()));
+create policy "profiles self update" on public.profiles for update
+  using (auth.uid() = id)
+  with check (
+    auth.uid() = id
+    and role = (select p.role from public.profiles p where p.id = auth.uid())
+  );
+create policy "profiles admin update" on public.profiles for update using (public.is_admin(auth.uid())) with check (public.is_admin(auth.uid()));
 
 create policy "roster read all authenticated" on public.roster_members for select using (auth.role() = 'authenticated');
 create policy "roster admin write" on public.roster_members for all using (public.is_admin(auth.uid())) with check (public.is_admin(auth.uid()));
@@ -202,3 +208,6 @@ begin
   end if;
 end;
 $$;
+
+revoke execute on function public.promote_user_to_admin(text) from public, anon, authenticated;
+grant execute on function public.promote_user_to_admin(text) to service_role;
