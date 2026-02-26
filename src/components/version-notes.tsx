@@ -1,6 +1,17 @@
-export const appVersion = '0.1.6';
+export const appVersion = '0.2.0';
 
 export const patchNotes = [
+  {
+    version: '0.2.0',
+    notes: [
+      'Introduced a Dune: Awakening-inspired dual theme system with a polished light and dark visual treatment across cards, controls, and navigation.',
+      'Redesigned navigation with a stylized container and active-state gradients, plus a persistent theme toggle in the header for quick switching.',
+      'Moved release notes out of the dashboard into a floating "Change Log" button that opens a compact update pop-up in the lower-right corner.',
+      'Expanded admin roster controls so administrators can add members with handle/rank and edit name, handle, and rank directly from the table.',
+      'Updated the product identity to The Black Templars Ledger with matching guild-specific header messaging.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.1.6',
     notes: [

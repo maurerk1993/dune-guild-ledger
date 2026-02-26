@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase-client';
 import { Nav } from '@/components/nav';
 import { SignOutButton } from '@/components/sign-out-button';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 type Role = 'member' | 'admin' | null;
 
@@ -58,6 +59,7 @@ export function AppHeaderActions() {
   return (
     <div className="flex items-center gap-3">
       <Nav role={role} />
+      <ThemeToggle />
       <SignOutButton />
     </div>
   );

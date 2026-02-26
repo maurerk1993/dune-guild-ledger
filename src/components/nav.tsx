@@ -20,12 +20,12 @@ export function Nav({ role }: { role: Role }) {
   const visibleLinks = links.filter(([label]) => label !== 'Admin' || role === 'admin');
 
   return (
-    <nav className="flex flex-wrap gap-2">
+    <nav className="nav-shell">
       {visibleLinks.map(([label, href]) => (
         <Link
           key={href}
           href={href}
-          className={`rounded-lg px-3 py-2 ${pathname.startsWith(href) ? 'bg-dune-gold text-slate-900' : 'bg-slate-800 text-dune-sand'}`}
+          className={`nav-link ${pathname.startsWith(href) ? 'nav-link-active' : ''}`}
         >
           {label}
         </Link>
