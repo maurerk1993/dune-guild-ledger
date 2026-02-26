@@ -1,6 +1,14 @@
-export const appVersion = '0.1.4';
+export const appVersion = '0.1.5';
 
 export const patchNotes = [
+  {
+    version: '0.1.5',
+    notes: [
+      'Enforced authentication in middleware so unauthenticated visitors are redirected to account registration before accessing any protected pages.',
+      'Updated the home route to send new visitors to sign up and keep signed-in users routed directly to the dashboard.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.1.4',
     notes: [
