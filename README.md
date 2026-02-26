@@ -12,7 +12,7 @@ Production-oriented Next.js + Supabase app for Dune: Awakening guild logistics.
 - Built-in app version + patch notes (Dashboard)
 
 ## Version
-- `0.1.0`
+- `0.4.0`
 
 ## Assumptions
 - Members can always read roster and contributions history.
@@ -39,8 +39,11 @@ git push -u origin main
 ## 3) Run SQL migrations in Supabase (exact order)
 Run SQL in Supabase SQL editor:
 1. `supabase/migrations/0001_init.sql`
+2. `supabase/migrations/0002_profile_names_motd_and_contribution_log_snapshots.sql`
+3. `supabase/migrations/0003_profiles_policy_hotfix.sql`
+4. `supabase/migrations/0004_contribution_points_and_admin_log_delete.sql`
 
-This migration creates all tables, constraints, indexes, triggers, helper functions, and RLS policies.
+These migrations create all tables, constraints, indexes, triggers, helper functions, and RLS policies, then apply incremental feature/hotfix updates.
 
 ## 4) Configure Supabase Auth
 In **Auth > URL Configuration**:
@@ -95,7 +98,7 @@ Open `http://localhost:3000`.
 - **Member can’t see expected ledger records**: check `app_settings.member_ledger_scope` value.
 
 ## SQL changes required from you
-Yes — you must run `supabase/migrations/0001_init.sql` in your Supabase project. Without this migration, the app will not work.
+Yes — you must run all migration files in order (`0001` through `0004`) in your Supabase project. Without them, contribution points and admin log deletions will not work correctly.
 
 ## Beyond PR acceptance
 After merging/deploying code, you must also:

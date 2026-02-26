@@ -12,17 +12,19 @@ export async function POST(request: Request) {
 
   const [{ data: profile }, { data: action }] = await Promise.all([
     supabase.from('profiles').select('display_name,email').eq('id', auth.user.id).single<{ display_name: string | null; email: string }>(),
-    supabase.from('contribution_actions').select('label').eq('id', action_id).single<{ label: string }>()
+    supabase.from('contribution_actions').select('label,points').eq('id', action_id).single<{ label: string; points: number }>()
   ]);
 
   const actorName = profile?.display_name?.trim() || profile?.email || 'unknown';
   const actionLabel = action?.label ?? 'Unknown contribution';
+  const pointsAwarded = action?.points ?? 0;
 
   const { error } = await supabase.from('contribution_logs').insert({
     action_id,
     user_id: auth.user.id,
     actor_name: actorName,
-    action_label: actionLabel
+    action_label: actionLabel,
+    points_awarded: pointsAwarded
   });
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   return NextResponse.json({ ok: true });

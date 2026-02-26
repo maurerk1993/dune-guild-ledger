@@ -1,6 +1,15 @@
-export const appVersion = '0.3.2';
+export const appVersion = '0.4.0';
 
 export const patchNotes = [
+  {
+    version: '0.4.0',
+    notes: [
+      'Added admin controls on Contributions so existing actions can now be edited, activated/deactivated, and fully deleted.',
+      'Introduced point values for each contribution action and display points in both action buttons and contribution history.',
+      'Contribution claims now snapshot awarded points and automatically maintain each member\'s running contribution point total in their profile.',
+      'Database migration required: run supabase/migrations/0004_contribution_points_and_admin_log_delete.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.3.2',
     notes: [

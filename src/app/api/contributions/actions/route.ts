@@ -6,6 +6,7 @@ import { assertAdmin } from '@/lib/authz';
 const schema = z.object({
   label: z.string().min(1),
   description: z.string().optional(),
+  points: z.number().int().min(0).default(1),
   is_active: z.boolean().default(true),
   sort_order: z.number().int().default(0)
 });
