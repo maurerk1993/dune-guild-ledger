@@ -28,6 +28,9 @@ export default function SignupPage() {
       >
         Sign up
       </button>
+      <button className="w-full bg-slate-700" onClick={() => router.push('/auth/login')}>
+        Sign in
+      </button>
     </section>
   );
 }

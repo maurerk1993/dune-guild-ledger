@@ -20,6 +20,7 @@ export default function RosterPage() {
   const [handle, setHandle] = useState('');
   const [rank, setRank] = useState('');
   const [role, setRole] = useState('member');
+  const [showAdminControls, setShowAdminControls] = useState(false);
   const [drafts, setDrafts] = useState<Record<string, DraftMember>>({});
 
   async function load() {
@@ -75,6 +76,13 @@ export default function RosterPage() {
   return (
     <section className="space-y-4">
       {role === 'admin' && (
+        <div>
+          <button className="bg-dune-gold text-slate-900" onClick={() => setShowAdminControls((current) => !current)}>
+            {showAdminControls ? 'Hide admin controls' : 'Show admin controls'}
+          </button>
+        </div>
+      )}
+      {role === 'admin' && showAdminControls && (
         <div className="card">
           <h2 className="text-lg font-semibold">Guild roster</h2>
           <div className="mt-2 grid gap-2 md:grid-cols-4">
@@ -111,14 +119,14 @@ export default function RosterPage() {
               {fields.map((f) => (
                 <th key={f.field_key} className="pb-2">{f.label}</th>
               ))}
-              {role === 'admin' && <th className="pb-2">Actions</th>}
+              {role === 'admin' && showAdminControls && <th className="pb-2">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {members.map((m) => (
               <tr key={m.id} className="border-t" style={{ borderColor: 'var(--panel-border)' }}>
                 <td className="py-2 pr-2">
-                  {role === 'admin' ? (
+                  {role === 'admin' && showAdminControls ? (
                     <input
                       value={drafts[m.id]?.display_name ?? ''}
                       onChange={(e) => setDrafts((prev) => ({ ...prev, [m.id]: { ...prev[m.id], display_name: e.target.value } }))}
@@ -128,7 +136,7 @@ export default function RosterPage() {
                   )}
                 </td>
                 <td className="py-2 pr-2">
-                  {role === 'admin' ? (
+                  {role === 'admin' && showAdminControls ? (
                     <input
                       value={drafts[m.id]?.handle ?? ''}
                       onChange={(e) => setDrafts((prev) => ({ ...prev, [m.id]: { ...prev[m.id], handle: e.target.value } }))}
@@ -138,7 +146,7 @@ export default function RosterPage() {
                   )}
                 </td>
                 <td className="py-2 pr-2">
-                  {role === 'admin' ? (
+                  {role === 'admin' && showAdminControls ? (
                     <input
                       value={drafts[m.id]?.rank ?? ''}
                       onChange={(e) => setDrafts((prev) => ({ ...prev, [m.id]: { ...prev[m.id], rank: e.target.value } }))}
@@ -148,7 +156,7 @@ export default function RosterPage() {
                   )}
                 </td>
                 {fields.map((f) => <td key={f.field_key}>—</td>)}
-                {role === 'admin' && (
+                {role === 'admin' && showAdminControls && (
                   <td>
                     <button
                       style={{ background: 'var(--accent-soft)', color: '#101722' }}

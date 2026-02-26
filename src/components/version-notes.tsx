@@ -1,6 +1,25 @@
-export const appVersion = '0.2.0';
+export const appVersion = '0.3.1';
 
 export const patchNotes = [
+  {
+    version: '0.3.1',
+    notes: [
+      'Fixed the 0.3.0 migration script failure by correcting the contribution log backfill query so it runs successfully on Supabase/Postgres.',
+      'No additional schema changes were introduced beyond the 0.3.0 migration, but this updated SQL must be used when applying that release.',
+      'If your 0.3.0 migration previously failed, rerun supabase/migrations/0002_profile_names_motd_and_contribution_log_snapshots.sql after pulling this update.'
+    ]
+  },
+  {
+    version: '0.3.0',
+    notes: [
+      'Updated authentication entry flow so visitors are routed to sign in by default and both sign-in/create-account options are always available.',
+      'Enhanced contribution logging with durable actor/action snapshots, retroactive backfill for existing logs, and admin-only delete controls for log entries.',
+      'Added profile display names to account settings so users can replace email-based labels across the app once they set a preferred name.',
+      'Reworked roster admin behavior to default to member view and reveal edit tools only after selecting the new "Show admin controls" toggle.',
+      'Replaced the dashboard operations overview card with an admin-editable Message of the Day panel.',
+      'Database migration required: run supabase/migrations/0002_profile_names_motd_and_contribution_log_snapshots.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.2.0',
     notes: [
