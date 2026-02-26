@@ -5,11 +5,6 @@ import { NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
-  type CookieToSet = {
-    name: string;
-    value: string;
-    options?: Parameters<typeof response.cookies.set>[2];
-  };
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -30,15 +25,19 @@ export async function middleware(request: NextRequest) {
 
   const { data } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname;
-  const isPublic = pathname.startsWith('/auth') || pathname === '/';
+  const isAuthRoute = pathname.startsWith('/auth');
 
-  if (!data.user && !isPublic) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/login';
-    return NextResponse.redirect(url);
+  if (!data.user) {
+    if (!isAuthRoute) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/signup';
+      return NextResponse.redirect(url);
+    }
+
+    return response;
   }
 
-  if (data.user && pathname.startsWith('/auth')) {
+  if (pathname === '/' || isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);
