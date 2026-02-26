@@ -1,6 +1,14 @@
-export const appVersion = '0.2.0';
+export const appVersion = '0.2.1';
 
 export const patchNotes = [
+  {
+    version: '0.2.1',
+    notes: [
+      'Fixed roster admin save/add behavior so blank handle and rank values validate correctly and persist without silent failures.',
+      'Aligned roster member API validation with nullable optional handle/rank fields to support clearing values during edits.',
+      'No database migration is required for this patch.'
+    ]
+  },
   {
     version: '0.2.0',
     notes: [
