@@ -21,6 +21,4 @@ where p.id = logs.user_id
   and a.id = logs.action_id
   and (logs.actor_name is null or logs.action_label is null);
 
-create policy "profiles read authenticated" on public.profiles
-for select
-using (auth.role() = 'authenticated');
+drop policy if exists "profiles read authenticated" on public.profiles;
