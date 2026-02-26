@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+type Role = 'member' | 'admin' | null;
+
 const links = [
   ['Dashboard', '/dashboard'],
   ['Ledger', '/ledger'],
@@ -10,14 +12,16 @@ const links = [
   ['Contributions', '/contributions'],
   ['Admin', '/admin'],
   ['Account', '/account']
-];
+] as const;
 
-export function Nav() {
+export function Nav({ role }: { role: Role }) {
   const pathname = usePathname();
+
+  const visibleLinks = links.filter(([label]) => label !== 'Admin' || role === 'admin');
 
   return (
     <nav className="flex flex-wrap gap-2">
-      {links.map(([label, href]) => (
+      {visibleLinks.map(([label, href]) => (
         <Link
           key={href}
           href={href}

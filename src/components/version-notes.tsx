@@ -1,6 +1,14 @@
-export const appVersion = '0.1.5';
+export const appVersion = '0.1.6';
 
 export const patchNotes = [
+  {
+    version: '0.1.6',
+    notes: [
+      'Locked global navigation and sign-out controls behind authenticated sessions so visitors on sign-in and sign-up screens no longer see in-app tabs.',
+      'Restricted the Admin page itself to admin users server-side and removed the Admin tab for non-admin members.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.1.5',
     notes: [
