@@ -4,12 +4,21 @@ import { createClient } from '@/lib/supabase-client';
 import { useEffect, useState } from 'react';
 
 type Action = { id: string; label: string; description: string | null; is_active: boolean };
-type Log = { id: string; created_at: string; contribution_actions: { label: string } | null; profiles: { email: string } | null };
+type Log = {
+  id: string;
+  created_at: string;
+  actor_name: string | null;
+  action_label: string | null;
+  contribution_actions: { label: string } | null;
+  profiles: { email: string; display_name: string | null } | null;
+};
 type RawLog = {
   id: string;
   created_at: string;
+  actor_name: string | null;
+  action_label: string | null;
   contribution_actions: { label: string }[] | null;
-  profiles: { email: string }[] | null;
+  profiles: { email: string; display_name: string | null }[] | null;
 };
 
 export default function ContributionsPage() {
@@ -29,7 +38,7 @@ export default function ContributionsPage() {
         .returns<Action[]>(),
       supabase
         .from('contribution_logs')
-        .select('id,created_at,contribution_actions(label),profiles(email)')
+        .select('id,created_at,actor_name,action_label,contribution_actions(label),profiles(email,display_name)')
         .order('created_at', { ascending: false })
         .limit(25)
         .returns<RawLog[]>()
@@ -38,6 +47,8 @@ export default function ContributionsPage() {
     const normalizedLogs: Log[] = (l ?? []).map((log) => ({
       id: log.id,
       created_at: log.created_at,
+      actor_name: log.actor_name,
+      action_label: log.action_label,
       contribution_actions: log.contribution_actions?.[0] ?? null,
       profiles: log.profiles?.[0] ?? null
     }));
@@ -77,9 +88,32 @@ export default function ContributionsPage() {
       </div>}
       <div className="card overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead><tr><th>Timestamp</th><th>User</th><th>Action</th></tr></thead>
+          <thead><tr><th>Timestamp</th><th>User</th><th>Action</th>{role === 'admin' && <th>Admin</th>}</tr></thead>
           <tbody>
-            {logs.map((log) => <tr key={log.id} className="border-t border-dune-azure/20"><td>{new Date(log.created_at).toLocaleString()}</td><td>{log.profiles?.email ?? 'unknown'}</td><td>{log.contribution_actions?.label}</td></tr>)}
+            {logs.map((log) => {
+              const displayUser = log.actor_name ?? log.profiles?.display_name ?? log.profiles?.email ?? 'unknown';
+              const displayAction = log.action_label ?? log.contribution_actions?.label ?? 'Unknown contribution';
+              return (
+                <tr key={log.id} className="border-t border-dune-azure/20">
+                  <td>{new Date(log.created_at).toLocaleString()}</td>
+                  <td>{displayUser}</td>
+                  <td>{displayAction}</td>
+                  {role === 'admin' && (
+                    <td>
+                      <button
+                        className="bg-red-500 text-white"
+                        onClick={async () => {
+                          await fetch('/api/contributions/logs', { method: 'DELETE', body: JSON.stringify({ id: log.id }) });
+                          await load();
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

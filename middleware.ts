@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   if (!data.user) {
     if (!isAuthRoute) {
       const url = request.nextUrl.clone();
-      url.pathname = '/auth/signup';
+      url.pathname = '/auth/login';
       return NextResponse.redirect(url);
     }
 
