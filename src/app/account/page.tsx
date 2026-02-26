@@ -8,6 +8,7 @@ type Profile = {
   email: string;
   display_name: string | null;
   role: string;
+  contribution_points: number;
 };
 
 export default function AccountPage() {
@@ -23,7 +24,7 @@ export default function AccountPage() {
 
       const { data } = await supabase
         .from('profiles')
-        .select('id,email,display_name,role')
+        .select('id,email,display_name,role,contribution_points')
         .eq('id', authData.user.id)
         .single<Profile>();
 
@@ -44,6 +45,7 @@ export default function AccountPage() {
       <p className="text-sm">Profile name: {effectiveName ?? '—'}</p>
       <p className="text-sm">Email: {profile?.email ?? '—'}</p>
       <p className="text-sm">Role: {profile?.role ?? '—'}</p>
+      <p className="text-sm">Contribution points: {profile?.contribution_points ?? 0}</p>
       <div className="space-y-2 border-t pt-3" style={{ borderColor: 'var(--panel-border)' }}>
         <h3 className="font-semibold">Edit profile name</h3>
         <input value={displayName} placeholder="How your name appears" onChange={(event) => setDisplayName(event.target.value)} />
