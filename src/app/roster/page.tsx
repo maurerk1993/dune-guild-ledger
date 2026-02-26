@@ -55,6 +55,11 @@ export default function RosterPage() {
     void load();
   }, []);
 
+  function toNullableString(value: string) {
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
   async function saveMember(memberId: string) {
     const draft = drafts[memberId];
     if (!draft) return;
@@ -64,8 +69,8 @@ export default function RosterPage() {
       body: JSON.stringify({
         id: memberId,
         display_name: draft.display_name,
-        handle: draft.handle || null,
-        rank: draft.rank || null
+        handle: toNullableString(draft.handle),
+        rank: toNullableString(draft.rank)
       })
     });
 
@@ -87,7 +92,11 @@ export default function RosterPage() {
               onClick={async () => {
                 await fetch('/api/roster/members', {
                   method: 'POST',
-                  body: JSON.stringify({ display_name: displayName, handle: handle || null, rank: rank || null })
+                  body: JSON.stringify({
+                    display_name: displayName,
+                    handle: toNullableString(handle),
+                    rank: toNullableString(rank)
+                  })
                 });
                 setDisplayName('');
                 setHandle('');

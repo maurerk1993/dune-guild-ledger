@@ -5,8 +5,8 @@ import { assertAdmin } from '@/lib/authz';
 
 const schema = z.object({
   display_name: z.string().min(1),
-  handle: z.string().optional(),
-  rank: z.string().optional(),
+  handle: z.string().nullable().optional(),
+  rank: z.string().nullable().optional(),
   join_date: z.string().optional(),
   notes: z.string().optional(),
   user_id: z.string().uuid().nullable().optional()
