@@ -1,6 +1,15 @@
-export const appVersion = '0.4.0';
+export const appVersion = '0.5.0';
 
 export const patchNotes = [
+  {
+    version: '0.5.0',
+    notes: [
+      'Full Atreides command-interface facelift with a green tactical palette, layered HUD-like backgrounds, and upgraded card styling across the app.',
+      'Refreshed buttons, tables, and navigation states so light and dark themes remain readable while still feeling like a game UI.',
+      'Added dune-inspired iconography to the header, navigation, theme controls, and change-log launcher for a more immersive interface.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.4.0',
     notes: [

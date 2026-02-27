@@ -36,7 +36,7 @@ export function MotdCard({ initialMessage, isAdmin }: Props) {
       {isAdmin && (
         <div className="mt-3 space-y-2">
           <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={3} />
-          <button className="bg-dune-gold text-slate-900" onClick={saveMessage}>
+          <button className="btn-primary" onClick={saveMessage}>
             Save message
           </button>
           {status && <p className="text-xs thematic-subtitle">{status}</p>}

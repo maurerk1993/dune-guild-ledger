@@ -3,52 +3,62 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f3ecdb;
-  --bg-gradient-start: #fff7e5;
-  --bg-gradient-mid: #e2d3ad;
-  --bg-gradient-end: #c2a56f;
-  --panel: rgba(255, 249, 234, 0.9);
-  --panel-border: rgba(119, 92, 45, 0.35);
-  --text: #2f2414;
-  --muted: #5d4a2d;
-  --accent: #8a5b1a;
-  --accent-soft: #d3ad6a;
+  --bg: #edf5ee;
+  --bg-gradient-start: #f6fff8;
+  --bg-gradient-mid: #d8ebdb;
+  --bg-gradient-end: #bdd8c3;
+  --panel: rgba(246, 255, 248, 0.86);
+  --panel-strong: rgba(231, 248, 235, 0.94);
+  --panel-border: rgba(35, 101, 58, 0.35);
+  --text: #143225;
+  --muted: #2f5c46;
+  --accent: #2f9c58;
+  --accent-strong: #1f6f3b;
+  --accent-soft: #98d8a7;
+  --danger: #b33945;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #0d1218;
-  --bg-gradient-start: #1f2730;
-  --bg-gradient-mid: #151a1f;
-  --bg-gradient-end: #0a0d12;
-  --panel: rgba(21, 26, 31, 0.84);
-  --panel-border: rgba(116, 154, 191, 0.35);
-  --text: #e7d3ab;
-  --muted: #9eb8d1;
-  --accent: #e4b85d;
-  --accent-soft: #5c8db8;
+  --bg: #070f0c;
+  --bg-gradient-start: #12241b;
+  --bg-gradient-mid: #0c1711;
+  --bg-gradient-end: #050b08;
+  --panel: rgba(14, 28, 20, 0.82);
+  --panel-strong: rgba(18, 36, 26, 0.94);
+  --panel-border: rgba(80, 194, 116, 0.38);
+  --text: #dcf5e4;
+  --muted: #8ec8a0;
+  --accent: #4fdd83;
+  --accent-strong: #2fa55c;
+  --accent-soft: #1a3a28;
+  --danger: #f06c7a;
   color-scheme: dark;
 }
 
 body {
-  background: radial-gradient(circle at top, var(--bg-gradient-start), var(--bg-gradient-mid) 45%, var(--bg-gradient-end));
+  background:
+    radial-gradient(circle at top, var(--bg-gradient-start), var(--bg-gradient-mid) 48%, var(--bg-gradient-end)),
+    repeating-linear-gradient(0deg, transparent 0, transparent 2px, color-mix(in srgb, var(--accent) 3%, transparent) 2px, color-mix(in srgb, var(--accent) 3%, transparent) 3px);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   min-height: 100vh;
+  letter-spacing: 0.01em;
 }
 
 .card {
-  @apply rounded-xl border p-4 shadow-lg backdrop-blur-sm;
-  background: var(--panel);
+  @apply rounded-xl border p-4 shadow-lg backdrop-blur-md;
+  background: linear-gradient(160deg, var(--panel-strong), var(--panel));
   border-color: var(--panel-border);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 18%, transparent), 0 18px 32px rgba(0, 0, 0, 0.24);
 }
 
 input,
 select,
 textarea {
   @apply rounded-md border px-3 py-2 text-sm;
-  background: color-mix(in srgb, var(--panel) 95%, transparent);
-  border-color: var(--panel-border);
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  border-color: color-mix(in srgb, var(--panel-border) 80%, var(--accent) 20%);
   color: var(--text);
 }
 
@@ -58,7 +68,7 @@ textarea::placeholder {
 }
 
 button {
-  @apply rounded-md px-3 py-2 text-sm font-medium transition;
+  @apply rounded-md px-3 py-2 text-sm font-semibold transition;
 }
 
 button:focus-visible,
@@ -66,12 +76,13 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent-soft);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 .thematic-title {
   color: var(--accent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .thematic-subtitle {
@@ -81,21 +92,48 @@ a:focus-visible {
 .nav-shell {
   @apply flex flex-wrap gap-2 rounded-xl border p-2 shadow-md;
   border-color: var(--panel-border);
-  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
 }
 
 .nav-link {
-  @apply rounded-lg px-3 py-2 text-sm font-medium transition;
+  @apply flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition;
   color: var(--muted);
 }
 
 .nav-link:hover {
-  background: color-mix(in srgb, var(--accent-soft) 25%, transparent);
+  background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
   color: var(--text);
 }
 
 .nav-link-active {
-  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 65%, #fff));
-  color: #101722;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+  color: #f5fff8;
+  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+  background: linear-gradient(140deg, var(--accent), var(--accent-strong));
+  color: #f4fff7;
+}
+
+.btn-secondary {
+  background: color-mix(in srgb, var(--accent-soft) 48%, var(--panel));
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+}
+
+.btn-danger {
+  background: color-mix(in srgb, var(--danger) 85%, #2b0e15);
+  color: #fff3f5;
+}
+
+.table-shell table thead {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+
+.table-shell tbody tr {
+  border-top: 1px solid color-mix(in srgb, var(--panel-border) 70%, transparent);
 }

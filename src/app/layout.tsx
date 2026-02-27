@@ -1,6 +1,7 @@
 import './globals.css';
 import { AppHeaderActions } from '@/components/app-header-actions';
 import { ChangeLogFab } from '@/components/change-log-fab';
+import { BadgeCheck, Orbit } from 'lucide-react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,8 +10,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="mx-auto min-h-screen w-full max-w-6xl p-6 pb-24">
           <header className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b pb-4" style={{ borderColor: 'var(--panel-border)' }}>
             <div>
-              <h1 className="thematic-title text-2xl font-semibold">The Black Templars Ledger</h1>
-              <p className="thematic-subtitle text-sm">The official app created by The Black Templars, for The Black Templars.</p>
+              <h1 className="thematic-title flex items-center gap-2 text-2xl font-semibold">
+                <Orbit size={22} aria-hidden="true" />
+                House Atreides Command Ledger
+                <BadgeCheck size={20} aria-hidden="true" />
+              </h1>
+              <p className="thematic-subtitle text-sm">Tactical records, contribution ops, and guild readiness in a unified command interface.</p>
             </div>
             <AppHeaderActions />
           </header>

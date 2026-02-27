@@ -15,9 +15,9 @@ export default function SignupPage() {
       <h2 className="text-xl font-semibold">Create account</h2>
       <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      {message && <p className="text-dune-azure">{message}</p>}
+      {message && <p className="thematic-subtitle">{message}</p>}
       <button
-        className="w-full bg-dune-gold text-slate-900"
+        className="w-full btn-primary"
         onClick={async () => {
           const supabase = createClient();
           const { error } = await supabase.auth.signUp({ email, password });
@@ -28,7 +28,7 @@ export default function SignupPage() {
       >
         Sign up
       </button>
-      <button className="w-full bg-slate-700" onClick={() => router.push('/auth/login')}>
+      <button className="w-full btn-secondary" onClick={() => router.push('/auth/login')}>
         Sign in
       </button>
     </section>
