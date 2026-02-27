@@ -45,7 +45,7 @@ export default function AccountPage() {
       <p className="text-sm">In-game Dune username: {effectiveName ?? '—'}</p>
       <p className="text-sm">Email: {profile?.email ?? '—'}</p>
       <p className="text-sm">Role: {profile?.role ?? '—'}</p>
-      <p className="text-sm">Contribution points: {profile?.contribution_points ?? 0}</p>
+      <p className="text-sm">Guild Points: {profile?.contribution_points ?? 0}</p>
       <div className="space-y-2 border-t pt-3" style={{ borderColor: 'var(--panel-border)' }}>
         <h3 className="font-semibold">Edit in-game Dune username</h3>
         <input value={displayName} placeholder="Your exact in-game Dune username" onChange={(event) => setDisplayName(event.target.value)} />

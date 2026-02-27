@@ -13,6 +13,7 @@ export function AppHeaderActions() {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState<Role>(null);
+  const [guildPoints, setGuildPoints] = useState(0);
 
   useEffect(() => {
     const supabase = createClient();
@@ -22,6 +23,7 @@ export function AppHeaderActions() {
       if (!authData.user) {
         setIsAuthenticated(false);
         setRole(null);
+        setGuildPoints(0);
         return;
       }
 
@@ -29,11 +31,12 @@ export function AppHeaderActions() {
 
       const { data: profile } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role,contribution_points')
         .eq('id', authData.user.id)
-        .maybeSingle<{ role: 'member' | 'admin' }>();
+        .maybeSingle<{ role: 'member' | 'admin'; contribution_points: number | null }>();
 
       setRole(profile?.role ?? 'member');
+      setGuildPoints(profile?.contribution_points ?? 0);
     }
 
     void loadUser();
@@ -44,6 +47,7 @@ export function AppHeaderActions() {
       setIsAuthenticated(Boolean(session?.user));
       if (!session?.user) {
         setRole(null);
+        setGuildPoints(0);
       }
     });
 
@@ -58,6 +62,12 @@ export function AppHeaderActions() {
 
   return (
     <div className="flex items-center gap-3">
+      <div
+        className="card px-3 py-2 text-sm"
+        title="Redeem Guild Points for rewards such as Melange, Blueprints and End game materials. Guild Points are earned by Contributing to the guild."
+      >
+        <span className="font-semibold">Guild Points:</span> {guildPoints}
+      </div>
       <Nav role={role} />
       <ThemeToggle />
       <SignOutButton />
