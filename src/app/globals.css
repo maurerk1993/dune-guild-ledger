@@ -90,13 +90,13 @@ a:focus-visible {
 }
 
 .nav-shell {
-  @apply flex flex-wrap gap-2 rounded-xl border p-2 shadow-md;
+  @apply flex flex-nowrap gap-2 overflow-x-auto rounded-xl border p-2 shadow-md;
   border-color: var(--panel-border);
   background: color-mix(in srgb, var(--panel) 92%, transparent);
 }
 
 .nav-link {
-  @apply flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition;
+  @apply flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition;
   color: var(--muted);
 }
 

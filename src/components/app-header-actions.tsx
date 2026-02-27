@@ -61,14 +61,16 @@ export function AppHeaderActions() {
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex w-full flex-wrap items-center justify-end gap-3 xl:flex-nowrap">
       <div
-        className="card px-3 py-2 text-sm"
+        className="card shrink-0 px-3 py-2 text-sm"
         title="Redeem Guild Points for rewards such as Melange, Blueprints and End game materials. Guild Points are earned by Contributing to the guild."
       >
         <span className="font-semibold">Guild Points:</span> {guildPoints}
       </div>
-      <Nav role={role} />
+      <div className="min-w-[18rem] flex-1">
+        <Nav role={role} />
+      </div>
       <ThemeToggle />
       <SignOutButton />
     </div>

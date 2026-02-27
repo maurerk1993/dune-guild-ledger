@@ -1,6 +1,15 @@
-export const appVersion = '0.6.2';
+export const appVersion = '0.6.3';
 
 export const patchNotes = [
+  {
+    version: '0.6.3',
+    notes: [
+      'Expanded the main application shell width so header controls have more room and no longer feel cramped in the center column.',
+      'Improved header action layout to better distribute space between Guild Points, navigation, and utility buttons on wide screens.',
+      'Updated navigation styling to stay on one row and scroll horizontally when needed, preventing the Admin tab from forcing a broken two-line menu.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.6.2',
     notes: [
