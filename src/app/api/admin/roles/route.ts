@@ -3,15 +3,21 @@ import { z } from 'zod';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { assertAdmin } from '@/lib/authz';
 
+const updateRoleSchema = z.object({
+  userId: z.string().uuid(),
+  role: z.enum(['member', 'admin'])
+});
+
 export async function PATCH(request: Request) {
-  await assertAdmin();
+  const currentProfile = await assertAdmin();
   const supabase = await createServerSupabaseClient();
-  const { email, role } = z.object({ email: z.string().email(), role: z.enum(['member', 'admin']) }).parse(await request.json());
+  const { userId, role } = updateRoleSchema.parse(await request.json());
 
-  const { data: target } = await supabase.from('profiles').select('id').eq('email', email).single();
-  if (!target) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
+  if (userId === currentProfile.id && role !== 'admin') {
+    return NextResponse.json({ error: 'You cannot demote your own account.' }, { status: 400 });
+  }
 
-  const { error } = await supabase.from('profiles').update({ role }).eq('id', target.id);
+  const { error } = await supabase.from('profiles').update({ role }).eq('id', userId);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   return NextResponse.json({ ok: true });
