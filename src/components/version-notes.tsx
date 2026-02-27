@@ -1,6 +1,14 @@
-export const appVersion = '0.5.0';
+export const appVersion = '0.5.1';
 
 export const patchNotes = [
+  {
+    version: '0.5.1',
+    notes: [
+      'Fixed a production crash caused by Supabase SSR attempting to write cookies during Server Component rendering.',
+      'Updated server-side auth cookie handling to gracefully skip writes outside Middleware/Route Handlers while preserving session refresh in supported contexts.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.5.0',
     notes: [
