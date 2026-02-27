@@ -42,28 +42,37 @@ export default function AccountPage() {
   return (
     <section className="card max-w-lg space-y-3">
       <h2 className="text-lg font-semibold">Account</h2>
-      <p className="text-sm">Profile name: {effectiveName ?? '—'}</p>
+      <p className="text-sm">In-game Dune username: {effectiveName ?? '—'}</p>
       <p className="text-sm">Email: {profile?.email ?? '—'}</p>
       <p className="text-sm">Role: {profile?.role ?? '—'}</p>
       <p className="text-sm">Contribution points: {profile?.contribution_points ?? 0}</p>
       <div className="space-y-2 border-t pt-3" style={{ borderColor: 'var(--panel-border)' }}>
-        <h3 className="font-semibold">Edit profile name</h3>
-        <input value={displayName} placeholder="How your name appears" onChange={(event) => setDisplayName(event.target.value)} />
+        <h3 className="font-semibold">Edit in-game Dune username</h3>
+        <input value={displayName} placeholder="Your exact in-game Dune username" onChange={(event) => setDisplayName(event.target.value)} />
         <button
           className="btn-primary"
           onClick={async () => {
             if (!profile) return;
+
+            const nextName = displayName.trim();
+            if (!nextName) {
+              setStatus('In-game Dune username is required.');
+              return;
+            }
+
             const supabase = createClient();
-            const { error } = await supabase.from('profiles').update({ display_name: displayName || null }).eq('id', profile.id);
+            const { error } = await supabase.from('profiles').update({ display_name: nextName }).eq('id', profile.id);
             if (error) {
               setStatus(error.message);
               return;
             }
-            setProfile({ ...profile, display_name: displayName || null });
-            setStatus('Profile name updated.');
+
+            setProfile({ ...profile, display_name: nextName });
+            setDisplayName(nextName);
+            setStatus('In-game Dune username updated.');
           }}
         >
-          Save profile name
+          Save in-game username
         </button>
         {status && <p className="text-xs thematic-subtitle">{status}</p>}
       </div>
