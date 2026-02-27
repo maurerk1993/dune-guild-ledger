@@ -4,20 +4,35 @@ import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { assertAdmin } from '@/lib/authz';
 
 const updateRoleSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string().uuid().optional(),
+  email: z.string().email().optional(),
   role: z.enum(['member', 'admin'])
+}).superRefine((value, ctx) => {
+  if (!value.userId && !value.email) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Either userId or email must be provided.'
+    });
+  }
 });
 
 export async function PATCH(request: Request) {
-  const currentProfile = await assertAdmin();
+  await assertAdmin();
   const supabase = await createServerSupabaseClient();
-  const { email, role } = z.object({ email: z.string().email(), role: z.enum(['member', 'admin']) }).parse(await request.json());
-  const normalizedEmail = email.trim().toLowerCase();
+  const { userId, email, role } = updateRoleSchema.parse(await request.json());
 
-  const { data: target } = await supabase.from('profiles').select('id').ilike('email', normalizedEmail).single();
-  if (!target) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
+  let targetId = userId;
 
-  const { error } = await supabase.from('profiles').update({ role }).eq('id', userId);
+  if (!targetId && email) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const { data: targetByEmail } = await supabase.from('profiles').select('id').ilike('email', normalizedEmail).single();
+    if (!targetByEmail) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
+    targetId = targetByEmail.id;
+  }
+
+  if (!targetId) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
+
+  const { error } = await supabase.from('profiles').update({ role }).eq('id', targetId);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   return NextResponse.json({ ok: true });

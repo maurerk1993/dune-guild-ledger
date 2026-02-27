@@ -1,6 +1,6 @@
 {
-  "name": "atreides-guild-ledger",
-  "version": "0.5.2",
+  "name": "dune-guild-ledger",
+  "version": "0.6.1",
   "private": true,
   "scripts": {
     "dev": "next dev",

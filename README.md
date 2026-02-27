@@ -1,4 +1,4 @@
-# Atreides Guild Ledger
+# Dune Guild Ledger
 
 Production-oriented Next.js + Supabase app for Dune: Awakening guild logistics.
 
@@ -12,7 +12,7 @@ Production-oriented Next.js + Supabase app for Dune: Awakening guild logistics.
 - Built-in app version + patch notes (Dashboard)
 
 ## Version
-- `0.4.0`
+- `0.6.1`
 
 ## Assumptions
 - Members can always read roster and contributions history.
@@ -24,7 +24,7 @@ Production-oriented Next.js + Supabase app for Dune: Awakening guild logistics.
 git init
 git remote add origin <your-github-repo-url>
 git add .
-git commit -m "feat: initial Atreides Guild Ledger MVP"
+git commit -m "feat: initial Dune Guild Ledger MVP"
 git branch -M main
 git push -u origin main
 ```
@@ -42,6 +42,7 @@ Run SQL in Supabase SQL editor:
 2. `supabase/migrations/0002_profile_names_motd_and_contribution_log_snapshots.sql`
 3. `supabase/migrations/0003_profiles_policy_hotfix.sql`
 4. `supabase/migrations/0004_contribution_points_and_admin_log_delete.sql`
+5. `supabase/migrations/0005_case_insensitive_admin_role_assignment.sql`
 
 These migrations create all tables, constraints, indexes, triggers, helper functions, and RLS policies, then apply incremental feature/hotfix updates.
 
@@ -49,7 +50,7 @@ These migrations create all tables, constraints, indexes, triggers, helper funct
 In **Auth > URL Configuration**:
 - Site URL:
   - Local: `http://localhost:3000`
-  - Prod: your Vercel domain, e.g. `https://atreides-ledger.vercel.app`
+  - Prod: your Vercel domain, e.g. `https://your-dune-ledger.vercel.app`
 - Redirect URLs:
   - `http://localhost:3000/**`
   - `https://<your-vercel-project>.vercel.app/**`
@@ -98,7 +99,7 @@ Open `http://localhost:3000`.
 - **Member can’t see expected ledger records**: check `app_settings.member_ledger_scope` value.
 
 ## SQL changes required from you
-Yes — you must run all migration files in order (`0001` through `0004`) in your Supabase project. Without them, contribution points and admin log deletions will not work correctly.
+Yes — you must run all migration files in order (`0001` through `0005`) in your Supabase project. Without them, username/MOTD/admin-role features can fail or behave inconsistently.
 
 ## Beyond PR acceptance
 After merging/deploying code, you must also:
