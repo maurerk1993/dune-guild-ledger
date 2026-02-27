@@ -1,6 +1,16 @@
-export const appVersion = '0.5.1';
+export const appVersion = '0.6.0';
 
 export const patchNotes = [
+  {
+    version: '0.6.0',
+    notes: [
+      'Renamed the app header to The Black Templars Guild Ledger and updated the subtitle to the new guild-focused ALPHA messaging.',
+      'Redesigned Message of the Day admin editing with a compact top-right pencil toggle so admins preview the exact member-facing message before editing.',
+      'Added a mandatory in-game Dune username modal for all users missing profile names, including already-registered accounts, to support rewards and contribution tracking.',
+      'Expanded Admin controls into a full registered-user list with one-click promote/demote role management (admin-only visibility).',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.5.1',
     notes: [
