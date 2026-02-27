@@ -1,6 +1,16 @@
-export const appVersion = '0.6.1';
+export const appVersion = '0.6.2';
 
 export const patchNotes = [
+  {
+    version: '0.6.2',
+    notes: [
+      'Updated the app identity in the header to The Black Templars Guild Ledger and refreshed the subtitle to the new ALPHA messaging.',
+      'Added a live Guild Points status box to the header so members can quickly see their current contribution total.',
+      'Added hover help text to Guild Points explaining how points are earned and what rewards they can be redeemed for.',
+      'Renamed "Contribution points" to "Guild Points" on the account page for consistent terminology across the app.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.6.1',
     notes: [

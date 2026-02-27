@@ -13,10 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <h1 className="thematic-title flex items-center gap-2 text-2xl font-semibold">
                 <Orbit size={22} aria-hidden="true" />
-                Dune Guild Ledger
+                The Black Templars Guild Ledger
                 <BadgeCheck size={20} aria-hidden="true" />
               </h1>
-              <p className="thematic-subtitle text-sm">The official operations and contribution app for your Dune: Awakening guild.</p>
+              <p className="thematic-subtitle text-sm">The official app for The Black Templars. Currently in ALPHA.</p>
             </div>
             <AppHeaderActions />
           </header>

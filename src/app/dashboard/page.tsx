@@ -31,7 +31,7 @@ export default async function DashboardPage() {
         <div className="card"><p>Roster members</p><p className="text-2xl thematic-title">{rosterCount ?? 0}</p></div>
         <div className="card"><p>Contribution logs</p><p className="text-2xl thematic-title">{contributionCount ?? 0}</p></div>
       </div>
-      <MotdCard initialMessage={settings?.message_of_the_day ?? 'Welcome to Dune Guild Ledger.'} isAdmin={profile?.role === 'admin'} />
+      <MotdCard initialMessage={settings?.message_of_the_day ?? 'Welcome to The Black Templars Guild Ledger.'} isAdmin={profile?.role === 'admin'} />
     </section>
   );
 }
