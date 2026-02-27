@@ -1,6 +1,15 @@
-export const appVersion = '0.5.2';
+export const appVersion = '0.6.1';
 
 export const patchNotes = [
+  {
+    version: '0.6.1',
+    notes: [
+      'Fixed admin role management API regressions that caused production builds to fail linting and prevented role updates from targeting the correct profile record.',
+      'Restored the v0.6.0 experience updates: Message of the Day editing flow, improved admin user-management UX, and required in-game username prompts/validation remain active.',
+      'Renamed in-app branding to Dune Guild Ledger for consistency across the header and release notes.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.5.2',
     notes: [
