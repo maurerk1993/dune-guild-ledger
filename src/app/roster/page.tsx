@@ -77,7 +77,7 @@ export default function RosterPage() {
     <section className="space-y-4">
       {role === 'admin' && (
         <div>
-          <button className="bg-dune-gold text-slate-900" onClick={() => setShowAdminControls((current) => !current)}>
+          <button className="btn-primary" onClick={() => setShowAdminControls((current) => !current)}>
             {showAdminControls ? 'Hide admin controls' : 'Show admin controls'}
           </button>
         </div>
@@ -90,8 +90,7 @@ export default function RosterPage() {
             <input placeholder="Handle" value={handle} onChange={(e) => setHandle(e.target.value)} />
             <input placeholder="Rank" value={rank} onChange={(e) => setRank(e.target.value)} />
             <button
-              className="text-slate-900"
-              style={{ background: 'var(--accent)' }}
+              className="btn-primary"
               onClick={async () => {
                 await fetch('/api/roster/members', {
                   method: 'POST',
@@ -109,7 +108,7 @@ export default function RosterPage() {
           <p className="mt-2 text-xs thematic-subtitle">Admins can update display name, handle, and rank directly in the roster table below.</p>
         </div>
       )}
-      <div className="card overflow-x-auto">
+      <div className="card table-shell overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
             <tr>
@@ -124,7 +123,7 @@ export default function RosterPage() {
           </thead>
           <tbody>
             {members.map((m) => (
-              <tr key={m.id} className="border-t" style={{ borderColor: 'var(--panel-border)' }}>
+              <tr key={m.id}>
                 <td className="py-2 pr-2">
                   {role === 'admin' && showAdminControls ? (
                     <input
@@ -158,12 +157,7 @@ export default function RosterPage() {
                 {fields.map((f) => <td key={f.field_key}>—</td>)}
                 {role === 'admin' && showAdminControls && (
                   <td>
-                    <button
-                      style={{ background: 'var(--accent-soft)', color: '#101722' }}
-                      onClick={async () => {
-                        await saveMember(m.id);
-                      }}
-                    >
+                    <button className="btn-secondary" onClick={async () => saveMember(m.id)}>
                       Save
                     </button>
                   </td>

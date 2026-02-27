@@ -50,7 +50,7 @@ export default function AccountPage() {
         <h3 className="font-semibold">Edit profile name</h3>
         <input value={displayName} placeholder="How your name appears" onChange={(event) => setDisplayName(event.target.value)} />
         <button
-          className="bg-dune-gold text-slate-900"
+          className="btn-primary"
           onClick={async () => {
             if (!profile) return;
             const supabase = createClient();

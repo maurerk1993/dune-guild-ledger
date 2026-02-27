@@ -1,5 +1,6 @@
 'use client';
 
+import { MoonStar, SunMedium } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -27,14 +28,20 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      className="border"
-      style={{ borderColor: 'var(--panel-border)', background: 'var(--panel)', color: 'var(--text)' }}
-      aria-label="Toggle theme"
-    >
-      {ready ? (theme === 'dark' ? 'Switch to Light' : 'Switch to Dark') : 'Theme'}
+    <button type="button" onClick={toggleTheme} className="btn-secondary flex items-center gap-2" aria-label="Toggle theme">
+      {ready ? (
+        theme === 'dark' ? (
+          <>
+            <SunMedium size={15} aria-hidden="true" /> Light Mode
+          </>
+        ) : (
+          <>
+            <MoonStar size={15} aria-hidden="true" /> Dark Mode
+          </>
+        )
+      ) : (
+        'Theme'
+      )}
     </button>
   );
 }

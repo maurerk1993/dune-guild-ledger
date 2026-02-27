@@ -85,7 +85,7 @@ export default function ContributionsPage() {
           {actions.filter((action) => action.is_active).map((action) => (
             <button
               key={action.id}
-              className="bg-dune-azure text-slate-900"
+              className="btn-secondary"
               onClick={async () => {
                 await fetch('/api/contributions/logs', { method: 'POST', body: JSON.stringify({ action_id: action.id }) });
                 await load();
@@ -110,7 +110,7 @@ export default function ContributionsPage() {
               aria-label="Action points"
             />
             <button
-              className="bg-dune-gold text-slate-900"
+              className="btn-primary"
               onClick={async () => {
                 await fetch('/api/contributions/actions', {
                   method: 'POST',
@@ -124,7 +124,7 @@ export default function ContributionsPage() {
               Add action
             </button>
           </div>
-          <div className="overflow-x-auto">
+          <div className="table-shell overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr>
@@ -136,13 +136,13 @@ export default function ContributionsPage() {
               </thead>
               <tbody>
                 {actions.map((action) => (
-                  <tr key={action.id} className="border-t border-dune-azure/20">
+                  <tr key={action.id} >
                     <td>{action.label}</td>
                     <td>{action.points}</td>
                     <td>{action.is_active ? 'Active' : 'Inactive'}</td>
                     <td className="space-x-2">
                       <button
-                        className="bg-dune-gold text-slate-900"
+                        className="btn-primary"
                         onClick={async () => {
                           const nextLabel = window.prompt('Update action label', action.label);
                           if (!nextLabel) return;
@@ -160,7 +160,7 @@ export default function ContributionsPage() {
                         Edit
                       </button>
                       <button
-                        className="bg-slate-600 text-white"
+                        className="btn-secondary"
                         onClick={async () => {
                           await fetch('/api/contributions/actions', {
                             method: 'PATCH',
@@ -172,7 +172,7 @@ export default function ContributionsPage() {
                         {action.is_active ? 'Deactivate' : 'Activate'}
                       </button>
                       <button
-                        className="bg-red-500 text-white"
+                        className="btn-danger"
                         onClick={async () => {
                           const confirmed = window.confirm('Delete this action? Existing logs for it will also be deleted.');
                           if (!confirmed) return;
@@ -193,7 +193,7 @@ export default function ContributionsPage() {
           </div>
         </div>
       )}
-      <div className="card overflow-x-auto">
+      <div className="card table-shell overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
             <tr>
@@ -209,7 +209,7 @@ export default function ContributionsPage() {
               const displayUser = log.actor_name ?? log.profiles?.display_name ?? log.profiles?.email ?? 'unknown';
               const displayAction = log.action_label ?? log.contribution_actions?.label ?? 'Unknown contribution';
               return (
-                <tr key={log.id} className="border-t border-dune-azure/20">
+                <tr key={log.id} >
                   <td>{new Date(log.created_at).toLocaleString()}</td>
                   <td>{displayUser}</td>
                   <td>{displayAction}</td>
@@ -217,7 +217,7 @@ export default function ContributionsPage() {
                   {role === 'admin' && (
                     <td>
                       <button
-                        className="bg-red-500 text-white"
+                        className="btn-danger"
                         onClick={async () => {
                           await fetch('/api/contributions/logs', { method: 'DELETE', body: JSON.stringify({ id: log.id }) });
                           await load();

@@ -32,7 +32,7 @@ export default function LedgerPage() {
           <input placeholder="Item" value={name} onChange={(e) => setName(e.target.value)} />
           <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} />
           <button
-            className="bg-dune-gold text-slate-900"
+            className="btn-primary"
             onClick={async () => {
               await fetch('/api/ledger', { method: 'POST', body: JSON.stringify({ name, quantity_owed: quantity, status: 'owed' }) });
               setName('');
@@ -44,15 +44,15 @@ export default function LedgerPage() {
           </button>
         </div>
       </div>}
-      <div className="card overflow-x-auto">
+      <div className="card table-shell overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead><tr><th>Name</th><th>Qty</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody>
             {entries.map((entry) => (
-              <tr key={entry.id} className="border-t border-dune-azure/20">
+              <tr key={entry.id} >
                 <td>{entry.name}</td><td>{entry.quantity_owed}</td><td>{entry.status}</td>
                 <td>
-                  <button className="bg-slate-700" onClick={async () => {
+                  <button className="btn-secondary" onClick={async () => {
                     await fetch('/api/fulfillment-requests', { method: 'POST', body: JSON.stringify({ ledger_entry_id: entry.id }) });
                   }}>Request fulfillment</button>
                 </td>
