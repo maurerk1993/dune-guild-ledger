@@ -1,14 +1,12 @@
-export const appVersion = '0.6.0';
+export const appVersion = '0.5.2';
 
 export const patchNotes = [
   {
-    version: '0.6.0',
+    version: '0.5.2',
     notes: [
-      'Renamed the app header to The Black Templars Guild Ledger and updated the subtitle to the new guild-focused ALPHA messaging.',
-      'Redesigned Message of the Day admin editing with a compact top-right pencil toggle so admins preview the exact member-facing message before editing.',
-      'Added a mandatory in-game Dune username modal for all users missing profile names, including already-registered accounts, to support rewards and contribution tracking.',
-      'Expanded Admin controls into a full registered-user list with one-click promote/demote role management (admin-only visibility).',
-      'No database migration is required for this release.'
+      'Fixed admin role assignment so grant/revoke by email is now case-insensitive and trims accidental whitespace.',
+      'Normalized profile email storage to lowercase for new and existing users so admin lookups and role updates stay consistent.',
+      'Database migration required: run supabase/migrations/0005_case_insensitive_admin_role_assignment.sql before deploying this release.'
     ]
   },
   {

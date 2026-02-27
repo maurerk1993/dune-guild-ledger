@@ -11,11 +11,11 @@ const updateRoleSchema = z.object({
 export async function PATCH(request: Request) {
   const currentProfile = await assertAdmin();
   const supabase = await createServerSupabaseClient();
-  const { userId, role } = updateRoleSchema.parse(await request.json());
+  const { email, role } = z.object({ email: z.string().email(), role: z.enum(['member', 'admin']) }).parse(await request.json());
+  const normalizedEmail = email.trim().toLowerCase();
 
-  if (userId === currentProfile.id && role !== 'admin') {
-    return NextResponse.json({ error: 'You cannot demote your own account.' }, { status: 400 });
-  }
+  const { data: target } = await supabase.from('profiles').select('id').ilike('email', normalizedEmail).single();
+  if (!target) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
 
   const { error } = await supabase.from('profiles').update({ role }).eq('id', userId);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
