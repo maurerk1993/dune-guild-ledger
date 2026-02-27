@@ -1,6 +1,14 @@
-export const appVersion = '0.5.1';
+export const appVersion = '0.5.2';
 
 export const patchNotes = [
+  {
+    version: '0.5.2',
+    notes: [
+      'Fixed admin role assignment so grant/revoke by email is now case-insensitive and trims accidental whitespace.',
+      'Normalized profile email storage to lowercase for new and existing users so admin lookups and role updates stay consistent.',
+      'Database migration required: run supabase/migrations/0005_case_insensitive_admin_role_assignment.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.5.1',
     notes: [
