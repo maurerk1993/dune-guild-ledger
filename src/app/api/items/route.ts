@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server';
 
 const createItemSchema = z.object({
   item_name: z.string().trim().min(1),
+  item_category: z.string().trim().optional().default('Uncategorized'),
   crafting_recipe: z.string().trim().min(1),
   notes: z.string().trim().optional().default(''),
   image_url: z.string().trim().url().optional().or(z.literal('')).nullable().default(''),
@@ -26,7 +27,7 @@ export async function GET() {
 
   const { data, error } = await supabase
     .from('item_recipes')
-    .select('id,item_name,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
+    .select('id,item_name,item_category,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
     .order('item_name', { ascending: true });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
@@ -43,12 +44,13 @@ export async function POST(request: Request) {
     .from('item_recipes')
     .insert({
       ...payload,
+      item_category: payload.item_category || 'Uncategorized',
       image_url: payload.image_url || null,
       image_path: payload.image_path || null,
       created_by: profile.id,
       updated_by: profile.id
     })
-    .select('id,item_name,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
+    .select('id,item_name,item_category,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
@@ -65,6 +67,7 @@ export async function PATCH(request: Request) {
     .from('item_recipes')
     .update({
       item_name: payload.item_name,
+      item_category: payload.item_category || 'Uncategorized',
       crafting_recipe: payload.crafting_recipe,
       notes: payload.notes,
       image_url: payload.image_url || null,
@@ -72,7 +75,7 @@ export async function PATCH(request: Request) {
       updated_by: profile.id
     })
     .eq('id', payload.id)
-    .select('id,item_name,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
+    .select('id,item_name,item_category,crafting_recipe,notes,image_url,image_path,created_at,updated_at')
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });

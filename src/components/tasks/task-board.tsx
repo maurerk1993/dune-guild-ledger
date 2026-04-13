@@ -1,6 +1,6 @@
 'use client';
 
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 type Task = {
@@ -69,14 +69,32 @@ export function TaskBoard({ initialTasks }: { initialTasks: Task[] }) {
 
   return (
     <section className="space-y-4">
-      <div className="card space-y-3">
-        <h2 className="text-lg font-semibold thematic-title">⚓ Add crew task</h2>
-        <div className="grid gap-2 md:grid-cols-[1fr,2fr,auto] md:items-end">
-          <input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Task title" />
-          <textarea value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Optional details" rows={2} />
-          <button className="btn-primary w-full md:w-fit" onClick={createTask} disabled={!title.trim()}>
-            Add task
-          </button>
+      <div className="card space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-lg font-semibold thematic-title">⚓ Add crew task</h2>
+          <p className="text-xs thematic-subtitle">Fast capture · shared instantly with the crew</p>
+        </div>
+
+        <div className="rounded-xl border p-3 md:p-4" style={{ borderColor: 'var(--panel-border)', background: 'color-mix(in srgb, var(--panel) 92%, transparent)' }}>
+          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr),auto] md:items-center">
+            <input
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="Task title"
+              className="h-12 text-base"
+            />
+            <button className="btn-primary h-12 w-full justify-center px-5 md:w-fit" onClick={createTask} disabled={!title.trim()}>
+              <Plus size={16} aria-hidden="true" />
+              Add task
+            </button>
+          </div>
+          <textarea
+            value={details}
+            onChange={(event) => setDetails(event.target.value)}
+            placeholder="Optional details"
+            rows={3}
+            className="mt-3"
+          />
         </div>
       </div>
 
