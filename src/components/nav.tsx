@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Anchor, ClipboardList, Shield, Shell, UserCircle2 } from 'lucide-react';
+import { Compass, ListChecks, Shield, Skull, UserCircle2 } from 'lucide-react';
 
 type Role = 'member' | 'admin' | null;
 
 const links = [
-  ['Captain\'s Deck', '/dashboard', Anchor],
-  ['To-Do Board', '/todo', ClipboardList],
-  ['Item Database', '/items', Shell],
+  ['Captain\'s Deck', '/dashboard', Compass],
+  ['To-Do Board', '/todo', ListChecks],
+  ['Item Database', '/items', Skull],
   ['Admin', '/admin', Shield],
   ['Account', '/account', UserCircle2]
 ] as const;

@@ -8,13 +8,14 @@ type Item = {
   crafting_recipe: string;
   notes: string | null;
   image_url: string | null;
+  image_path: string | null;
 };
 
 export function ItemDatabase({ items }: { items: Item[] }) {
   return (
     <section className="space-y-4">
       <div className="card">
-        <h2 className="text-lg font-semibold thematic-title">Windrose item database</h2>
+        <h2 className="text-lg font-semibold thematic-title">🦜 Windrose item database</h2>
         <p className="text-sm thematic-subtitle">Recipes and crafting notes for your co-op crew.</p>
       </div>
 
@@ -36,7 +37,7 @@ export function ItemDatabase({ items }: { items: Item[] }) {
                 No image uploaded
               </div>
             )}
-            <p className="text-sm"><span className="font-semibold">Crafting:</span> {item.crafting_recipe}</p>
+            <p className="text-sm"><span className="font-semibold">⚒ Crafting:</span> {item.crafting_recipe}</p>
             {item.notes && <p className="text-sm thematic-subtitle whitespace-pre-wrap">{item.notes}</p>}
           </article>
         ))}
