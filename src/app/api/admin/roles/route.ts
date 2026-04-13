@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { assertAdmin } from '@/lib/authz';
 
+const protectedAdminEmail = 'kpmaurer@outlook.com';
+
 const updateRoleSchema = z.object({
   userId: z.string().uuid().optional(),
   email: z.string().email().optional(),
@@ -31,6 +33,11 @@ export async function PATCH(request: Request) {
   }
 
   if (!targetId) return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
+
+  const { data: targetProfile } = await supabase.from('profiles').select('email').eq('id', targetId).single<{ email: string }>();
+  if (targetProfile?.email?.toLowerCase() === protectedAdminEmail && role !== 'admin') {
+    return NextResponse.json({ error: 'This account is permanently assigned as admin.' }, { status: 400 });
+  }
 
   const { error } = await supabase.from('profiles').update({ role }).eq('id', targetId);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });

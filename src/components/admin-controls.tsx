@@ -40,7 +40,7 @@ export function AdminControls({ initialUsers, currentUserId }: Props) {
     <section className="space-y-4">
       <div className="card space-y-2">
         <h2 className="text-lg font-semibold">Admin controls</h2>
-        <p className="text-sm thematic-subtitle">Manage registered users and promote/demote administrator access.</p>
+        <p className="text-sm thematic-subtitle">Manage registered crewmates and promote/demote administrator access. The account kpmaurer@outlook.com is permanently kept as admin.</p>
       </div>
 
       <div className="card table-shell overflow-auto">

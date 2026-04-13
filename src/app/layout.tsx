@@ -2,7 +2,7 @@ import './globals.css';
 import { AppHeaderActions } from '@/components/app-header-actions';
 import { ChangeLogFab } from '@/components/change-log-fab';
 import { RequiredProfileNameModal } from '@/components/required-profile-name-modal';
-import { BadgeCheck, Orbit } from 'lucide-react';
+import { Anchor, Waves } from 'lucide-react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,11 +12,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <header className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b pb-4" style={{ borderColor: 'var(--panel-border)' }}>
             <div>
               <h1 className="thematic-title flex items-center gap-2 text-2xl font-semibold">
-                <Orbit size={22} aria-hidden="true" />
-                The Black Templars Guild Ledger
-                <BadgeCheck size={20} aria-hidden="true" />
+                <Anchor size={22} aria-hidden="true" />
+                Windrose Co-op Captain&apos;s Log
+                <Waves size={20} aria-hidden="true" />
               </h1>
-              <p className="thematic-subtitle text-sm">The official app for The Black Templars. Currently in ALPHA.</p>
+              <p className="thematic-subtitle text-sm">Pirate-themed shared tracker for your crew&apos;s voyage.</p>
             </div>
             <AppHeaderActions />
           </header>
