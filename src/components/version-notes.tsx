@@ -1,6 +1,15 @@
-export const appVersion = '0.7.0';
+export const appVersion = '0.7.1';
 
 export const patchNotes = [
+  {
+    version: '0.7.1',
+    notes: [
+      'Fixed deployment-blocking lint errors caused by unescaped apostrophes in the app header text.',
+      'Replaced raw <img> usage on the Item Database with Next.js Image to satisfy lint requirements and improve image handling.',
+      'Configured Next.js remote image patterns so externally hosted item images continue to render correctly.',
+      'No database migration is required for this release.'
+    ]
+  },
   {
     version: '0.7.0',
     notes: [

@@ -13,10 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <h1 className="thematic-title flex items-center gap-2 text-2xl font-semibold">
                 <Anchor size={22} aria-hidden="true" />
-                Windrose Co-op Captain's Log
+                Windrose Co-op Captain&apos;s Log
                 <Waves size={20} aria-hidden="true" />
               </h1>
-              <p className="thematic-subtitle text-sm">Pirate-themed shared tracker for your crew's voyage.</p>
+              <p className="thematic-subtitle text-sm">Pirate-themed shared tracker for your crew&apos;s voyage.</p>
             </div>
             <AppHeaderActions />
           </header>
