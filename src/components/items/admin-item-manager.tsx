@@ -7,6 +7,7 @@ import { useState } from 'react';
 type Item = {
   id: string;
   item_name: string;
+  item_category: string | null;
   crafting_recipe: string;
   notes: string | null;
   image_url: string | null;
@@ -15,6 +16,7 @@ type Item = {
 
 const blankForm = {
   item_name: '',
+  item_category: 'Resources',
   crafting_recipe: '',
   notes: '',
   image_url: '',
@@ -110,8 +112,9 @@ export function AdminItemManager({ initialItems }: { initialItems: Item[] }) {
   return (
     <div className="card space-y-4">
       <h3 className="text-lg font-semibold thematic-title">🏴‍☠️ Item database admin</h3>
-      <div className="grid gap-2 md:grid-cols-2">
+      <div className="grid gap-2 md:grid-cols-3">
         <input placeholder="Item name" value={form.item_name} onChange={(e) => setForm((p) => ({ ...p, item_name: e.target.value }))} />
+        <input placeholder="Category (e.g. Weapons)" value={form.item_category ?? ''} onChange={(e) => setForm((p) => ({ ...p, item_category: e.target.value }))} />
         <textarea placeholder="Optional notes" rows={2} value={form.notes} onChange={(e) => setForm((p) => ({ ...p, notes: e.target.value }))} />
       </div>
       <textarea placeholder="Crafting recipe" rows={3} value={form.crafting_recipe} onChange={(e) => setForm((p) => ({ ...p, crafting_recipe: e.target.value }))} />
@@ -148,6 +151,7 @@ export function AdminItemManager({ initialItems }: { initialItems: Item[] }) {
               <div className="grid gap-3 md:grid-cols-[1fr,auto] md:items-start">
                 <div className="space-y-2">
                   <p className="font-semibold">{item.item_name}</p>
+                  <p className="text-xs thematic-subtitle">{item.item_category ?? 'Uncategorized'}</p>
                   <p className="text-sm"><span className="font-semibold">Crafting:</span> {item.crafting_recipe}</p>
                   {item.notes && <p className="text-sm thematic-subtitle whitespace-pre-wrap">{item.notes}</p>}
                   {item.image_url && (
@@ -204,6 +208,7 @@ function EditableItem({ item, onCancel, onSave }: { item: Item; onCancel: () => 
   return (
     <div className="space-y-2">
       <input value={draft.item_name} onChange={(e) => setDraft((p) => ({ ...p, item_name: e.target.value }))} />
+      <input value={draft.item_category ?? ''} placeholder="Category" onChange={(e) => setDraft((p) => ({ ...p, item_category: e.target.value }))} />
       <textarea value={draft.crafting_recipe} rows={3} onChange={(e) => setDraft((p) => ({ ...p, crafting_recipe: e.target.value }))} />
       <textarea value={draft.notes ?? ''} rows={2} onChange={(e) => setDraft((p) => ({ ...p, notes: e.target.value }))} />
       <div className="flex flex-wrap items-center gap-2">

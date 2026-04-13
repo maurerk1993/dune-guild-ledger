@@ -1,6 +1,15 @@
-export const appVersion = '0.8.0';
+export const appVersion = '0.9.0';
 
 export const patchNotes = [
+  {
+    version: '0.9.0',
+    notes: [
+      'Redesigned the To-Do Board input composer with a modern two-row layout so title, details, and action controls are visually balanced and no longer appear mismatched in size.',
+      'Rebuilt the Item Database browsing UX with full-text search, category tabs, denser compact cards, and smaller media blocks to support large data volumes.',
+      'Expanded item data model with category support and seeded Windrose guide content across resources, consumables, buildings, talents, status effects, armor, and icon information.',
+      'Database migration required: run supabase/migrations/0008_item_database_categories_and_seed.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.8.0',
     notes: [
