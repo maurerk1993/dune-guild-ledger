@@ -73,3 +73,33 @@ for each row execute procedure public.set_updated_at();
 update public.profiles
 set role = 'admin'
 where lower(email) = 'kpmaurer@outlook.com';
+
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  normalized_email text := lower(coalesce(new.email, 'unknown@example.com'));
+begin
+  insert into public.profiles (id, email, role)
+  values (
+    new.id,
+    normalized_email,
+    case
+      when normalized_email = 'kpmaurer@outlook.com' then 'admin'
+      else 'member'
+    end
+  )
+  on conflict (id) do update
+  set
+    email = excluded.email,
+    role = case
+      when excluded.email = 'kpmaurer@outlook.com' then 'admin'
+      else public.profiles.role
+    end;
+
+  return new;
+end;
+$$;
