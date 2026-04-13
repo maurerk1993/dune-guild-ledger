@@ -14,6 +14,18 @@ type Item = {
   image_path: string | null;
 };
 
+
+
+const ITEM_CATEGORIES = [
+  'Resources',
+  'Consumables',
+  'Buildings & Structures',
+  'Talents',
+  'Status Effects',
+  'Armor',
+  'Icon Information'
+] as const;
+
 const blankForm = {
   item_name: '',
   item_category: 'Resources',
@@ -114,7 +126,13 @@ export function AdminItemManager({ initialItems }: { initialItems: Item[] }) {
       <h3 className="text-lg font-semibold thematic-title">🏴‍☠️ Item database admin</h3>
       <div className="grid gap-2 md:grid-cols-3">
         <input placeholder="Item name" value={form.item_name} onChange={(e) => setForm((p) => ({ ...p, item_name: e.target.value }))} />
-        <input placeholder="Category (e.g. Weapons)" value={form.item_category ?? ''} onChange={(e) => setForm((p) => ({ ...p, item_category: e.target.value }))} />
+        <select value={form.item_category ?? 'Resources'} onChange={(e) => setForm((p) => ({ ...p, item_category: e.target.value }))}>
+          {ITEM_CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <textarea placeholder="Optional notes" rows={2} value={form.notes} onChange={(e) => setForm((p) => ({ ...p, notes: e.target.value }))} />
       </div>
       <textarea placeholder="Crafting recipe" rows={3} value={form.crafting_recipe} onChange={(e) => setForm((p) => ({ ...p, crafting_recipe: e.target.value }))} />
@@ -208,7 +226,13 @@ function EditableItem({ item, onCancel, onSave }: { item: Item; onCancel: () => 
   return (
     <div className="space-y-2">
       <input value={draft.item_name} onChange={(e) => setDraft((p) => ({ ...p, item_name: e.target.value }))} />
-      <input value={draft.item_category ?? ''} placeholder="Category" onChange={(e) => setDraft((p) => ({ ...p, item_category: e.target.value }))} />
+      <select value={draft.item_category ?? 'Resources'} onChange={(e) => setDraft((p) => ({ ...p, item_category: e.target.value }))}>
+        {ITEM_CATEGORIES.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
       <textarea value={draft.crafting_recipe} rows={3} onChange={(e) => setDraft((p) => ({ ...p, crafting_recipe: e.target.value }))} />
       <textarea value={draft.notes ?? ''} rows={2} onChange={(e) => setDraft((p) => ({ ...p, notes: e.target.value }))} />
       <div className="flex flex-wrap items-center gap-2">

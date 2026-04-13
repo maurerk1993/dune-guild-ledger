@@ -1,6 +1,14 @@
-export const appVersion = '0.9.0';
+export const appVersion = '0.9.1';
 
 export const patchNotes = [
+  {
+    version: '0.9.1',
+    notes: [
+      'Backfilled the Item Database with missing entries from the Windrose summarized guide across resources, consumables, buildings, talents, status effects, and armor pieces so the in-app catalog is now far more complete.',
+      'Updated Item Database admin forms so category assignment uses a controlled dropdown instead of free typing, preventing accidental unsupported category names.',
+      'Database migration required: run supabase/migrations/0009_item_database_guide_backfill.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.9.0',
     notes: [
