@@ -1,6 +1,16 @@
-export const appVersion = '0.7.1';
+export const appVersion = '0.8.0';
 
 export const patchNotes = [
+  {
+    version: '0.8.0',
+    notes: [
+      'Reworked the full visual theme with a brighter ocean-and-islands light-mode backdrop, stronger panel fades, and broader pirate-themed iconography across navigation and page sections.',
+      'Refined form controls globally so text inputs, text areas, and select fields now render with consistent spacing, full-width layout, and higher contrast for readability.',
+      'Redesigned the To-Do Board item actions to use icon-only edit/delete controls (pencil + trash) aligned to the right for cleaner row-based task management.',
+      'Added admin image upload/delete support for Item Database entries using Supabase Storage, including in-form previews and safe cleanup when images are removed.',
+      'Database migration required: run supabase/migrations/0007_item_image_storage.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.7.1',
     notes: [

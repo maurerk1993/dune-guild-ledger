@@ -1,5 +1,6 @@
 'use client';
 
+import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 type Task = {
@@ -69,31 +70,39 @@ export function TaskBoard({ initialTasks }: { initialTasks: Task[] }) {
   return (
     <section className="space-y-4">
       <div className="card space-y-3">
-        <h2 className="text-lg font-semibold thematic-title">Add crew task</h2>
-        <input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Task title" />
-        <textarea value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Optional details" rows={3} />
-        <button className="btn-primary w-fit" onClick={createTask} disabled={!title.trim()}>
-          Add task
-        </button>
+        <h2 className="text-lg font-semibold thematic-title">⚓ Add crew task</h2>
+        <div className="grid gap-2 md:grid-cols-[1fr,2fr,auto] md:items-end">
+          <input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Task title" />
+          <textarea value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Optional details" rows={2} />
+          <button className="btn-primary w-full md:w-fit" onClick={createTask} disabled={!title.trim()}>
+            Add task
+          </button>
+        </div>
       </div>
 
       <div className="card space-y-3">
-        <h2 className="text-lg font-semibold thematic-title">Current to-do manifest</h2>
+        <h2 className="text-lg font-semibold thematic-title">🗺️ Current to-do manifest</h2>
         {tasks.length === 0 && <p className="thematic-subtitle text-sm">No tasks yet. Add one above.</p>}
         <ul className="space-y-3">
           {tasks.map((task) => {
             const isEditing = editingTaskId === task.id;
             return (
-              <li key={task.id} className="rounded-lg border p-3" style={{ borderColor: 'var(--panel-border)' }}>
+              <li key={task.id} className="task-row">
                 {isEditing ? (
                   <EditableTask task={task} onCancel={() => setEditingTaskId(null)} onSave={saveTask} />
                 ) : (
-                  <div className="space-y-2">
-                    <p className="font-semibold">{task.title}</p>
-                    {task.details && <p className="text-sm thematic-subtitle whitespace-pre-wrap">{task.details}</p>}
-                    <div className="flex gap-2">
-                      <button className="btn-secondary" onClick={() => setEditingTaskId(task.id)}>Edit</button>
-                      <button className="btn-danger" onClick={() => removeTask(task.id)}>Remove</button>
+                  <div className="grid gap-3 md:grid-cols-[1fr,auto] md:items-start">
+                    <div className="space-y-1">
+                      <p className="font-semibold">{task.title}</p>
+                      {task.details && <p className="text-sm thematic-subtitle whitespace-pre-wrap">{task.details}</p>}
+                    </div>
+                    <div className="flex justify-end gap-2 md:flex-col">
+                      <button className="icon-btn" onClick={() => setEditingTaskId(task.id)} aria-label={`Edit ${task.title}`} title="Edit task">
+                        <Pencil size={15} aria-hidden="true" />
+                      </button>
+                      <button className="icon-btn icon-btn-danger" onClick={() => removeTask(task.id)} aria-label={`Remove ${task.title}`} title="Remove task">
+                        <Trash2 size={15} aria-hidden="true" />
+                      </button>
                     </div>
                   </div>
                 )}
@@ -116,7 +125,7 @@ function EditableTask({ task, onCancel, onSave }: { task: Task; onCancel: () => 
     <div className="space-y-2">
       <input value={title} onChange={(event) => setTitle(event.target.value)} />
       <textarea value={details} onChange={(event) => setDetails(event.target.value)} rows={3} />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button className="btn-primary" onClick={() => onSave({ ...task, title, details })} disabled={!title.trim()}>
           Save
         </button>
