@@ -2,16 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpenText, LayoutGrid, Shield, Star, Sword, UserCircle2 } from 'lucide-react';
+import { Anchor, ClipboardList, Shield, Shell, UserCircle2 } from 'lucide-react';
 
 type Role = 'member' | 'admin' | null;
 
 const links = [
-  ['Dashboard', '/dashboard', LayoutGrid],
-  ['Ledger', '/ledger', BookOpenText],
-  ['Roster', '/roster', Shield],
-  ['Contributions', '/contributions', Sword],
-  ['Admin', '/admin', Star],
+  ['Captain\'s Deck', '/dashboard', Anchor],
+  ['To-Do Board', '/todo', ClipboardList],
+  ['Item Database', '/items', Shell],
+  ['Admin', '/admin', Shield],
   ['Account', '/account', UserCircle2]
 ] as const;
 

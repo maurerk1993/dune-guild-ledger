@@ -1,6 +1,17 @@
-export const appVersion = '0.6.3';
+export const appVersion = '0.7.0';
 
 export const patchNotes = [
+  {
+    version: '0.7.0',
+    notes: [
+      'Major repurpose to a Windrose co-op tracker with pirate-themed branding, navigation, and visual styling across the full app shell.',
+      'Dashboard now focuses on Message of the Day plus a live crew task widget sourced from the shared to-do database.',
+      'Added a collaborative To-Do Board page where any authenticated crew member can add, edit, and remove tasks in real time from shared data.',
+      'Added an Item Database page for browsing item recipes and images, plus new admin item-management tools for creating, editing, and deleting entries.',
+      'Hardened permanent admin access so kpmaurer@outlook.com is always treated as admin and cannot be demoted through admin controls.',
+      'Database migration required: run supabase/migrations/0006_windrose_task_tracker.sql before deploying this release.'
+    ]
+  },
   {
     version: '0.6.3',
     notes: [
